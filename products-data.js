@@ -41,6 +41,11 @@ function getProducts() {
 }
 
 async function syncProducts() {
+  // If localStorage already has data, don't overwrite from Supabase
+  const existing = readLocalProducts();
+  if (existing !== null) return existing;
+
+  // First visit — populate from Supabase
   try {
     const res = await fetch(`${SUPABASE_URL}/products?order=id.asc`, {
       headers: { apikey: SUPABASE_KEY, Accept: 'application/json' }
@@ -51,8 +56,9 @@ async function syncProducts() {
       writeLocalProducts(data);
       return data;
     }
-    const local = readLocalProducts() || getDefaultProducts();
-    for (const p of local) {
+    // Supabase empty — migrate defaults
+    const defaults = getDefaultProducts();
+    for (const p of defaults) {
       const { id, created_at, ...rest } = p;
       await fetch(`${SUPABASE_URL}/products`, {
         method: 'POST',
