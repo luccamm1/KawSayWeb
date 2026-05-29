@@ -94,7 +94,10 @@ function getQty(id) {
 function loadCart() {
   try {
     const saved = localStorage.getItem('kawsay_cart');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return [];
+    const parsed = JSON.parse(saved);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(item => products.some(p => p.id === item.id));
   } catch {
     return [];
   }
@@ -671,6 +674,8 @@ renderProducts();
 updateUI();
 syncProducts().then(p => {
   products = p;
+  cart = loadCart();
+  saveCart();
   renderProducts();
   updateUI();
 });
