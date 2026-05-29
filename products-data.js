@@ -22,7 +22,7 @@ function readLocalProducts() {
     const saved = localStorage.getItem('kawsay_products');
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed)) return parsed;
     }
   } catch {}
   return null;
@@ -34,7 +34,7 @@ function writeLocalProducts(products) {
 
 function getProducts() {
   const local = readLocalProducts();
-  if (local) return local;
+  if (local !== null) return local;
   const defaults = getDefaultProducts();
   writeLocalProducts(defaults);
   return defaults;
