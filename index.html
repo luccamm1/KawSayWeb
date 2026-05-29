@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KawSay — Frutas y Verduras Congeladas Premium</title>
+  <meta name="description" content="Frutas y verduras congeladas premium entregadas en tu puerta. 100% natural, congeladas en su punto óptimo de frescura." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">KawSay</a>
+      <nav class="nav">
+        <a href="#products" class="nav__link">Productos</a>
+        <a href="#checkout" class="nav__link">Pedido</a>
+        <a href="#contact" class="nav__link">Contacto</a>
+      </nav>
+      <button class="cart-btn" id="cartBtn" aria-label="Abrir carrito">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-btn__badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <span class="hero__tag">Congelados Premium</span>
+        <h1 class="hero__title">Lo Mejor de la<br />Naturaleza, Fresco.</h1>
+        <p class="hero__desc">Congelados en su punto óptimo de madurez para preservar nutrientes y sabor. 100% natural, sin aditivos, directo del campo a tu congelador.</p>
+        <a href="#products" class="btn btn--primary hero__cta">
+          Ver Productos
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__circle">
+          <img src="logo-hero.png" alt="KawSay" class="hero__logo" />
+        </div>
+        <div class="hero__icon hero__icon--1">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M24 4C16 4 8 10 8 20c0 8 6 14 16 22 10-8 16-14 16-22 0-10-8-16-16-16z" fill="#C0392B" opacity=".8"/><path d="M24 8c-4 0-8 3-8 8 0 5 3 9 8 14 5-5 8-9 8-14 0-5-4-8-8-8z" fill="#E74C3C" opacity=".6"/><circle cx="24" cy="16" r="3" fill="#FFD700" opacity=".9"/></svg>
+        </div>
+        <div class="hero__icon hero__icon--2">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M24 6C16 6 8 14 8 24c0 12 8 18 16 18s16-6 16-18c0-10-8-18-16-18z" fill="#8FA63A" opacity=".8"/><path d="M24 10c-6 0-12 5-12 12 0 8 5 14 12 14s12-6 12-14c0-7-6-12-12-12z" fill="#B7C77A" opacity=".7"/></svg>
+        </div>
+        <div class="hero__icon hero__icon--3">
+          <svg viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="30" rx="16" ry="10" fill="#F39C12" opacity=".8"/><path d="M24 4C16 4 12 10 12 18c0 6 3 10 12 10s12-4 12-10c0-8-4-14-12-14z" fill="#E67E22" opacity=".7"/></svg>
+        </div>
+        <div class="hero__badge hero__badge--1">
+          <span class="hero__badge-num">100%</span>
+          <span class="hero__badge-label">Natural</span>
+        </div>
+        <div class="hero__badge hero__badge--2">
+          <span class="hero__badge-num">0</span>
+          <span class="hero__badge-label">Aditivos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS ===== -->
+  <section class="products section" id="products">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">Nuestra Selección</span>
+        <h2 class="section__title">Productos Congelados Premium</h2>
+        <p class="section__desc">Seleccionados a mano y congelados en su punto óptimo de madurez. Descubrí la diferencia de la calidad.</p>
+      </div>
+      <div class="products__tabs" id="productsTabs">
+        <button class="products__tab active" data-category="all">Todas</button>
+        <button class="products__tab" data-category="fruta">Frutas</button>
+        <button class="products__tab" data-category="verdura">Verduras</button>
+        <button class="products__tab" data-category="panaderia">Panadería</button>
+      </div>
+      <div class="products__sub" id="productsSub">Productos libres de gluten — Sin TACC</div>
+      <div class="products__grid" id="productsGrid">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CART SIDEBAR ===== -->
+  <aside class="cart-overlay" id="cartOverlay"></aside>
+  <aside class="cart" id="cart">
+    <div class="cart__header">
+      <h2 class="cart__title">Tu Carrito</h2>
+      <button class="cart__close" id="cartClose" aria-label="Cerrar carrito">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart__body" id="cartBody">
+      <div class="cart__empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#B7C77A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <p>Tu carrito está vacío</p>
+      </div>
+      <div class="cart__items" id="cartItems"></div>
+    </div>
+    <div class="cart__footer" id="cartFooter">
+      <div class="cart__total">
+        <span>Total</span>
+        <span class="cart__total-amount" id="cartTotal">$0</span>
+      </div>
+      <button class="btn btn--primary cart__checkout-btn" id="checkoutBtn">
+        Pedir por WhatsApp
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== CHECKOUT ===== -->
+  <section class="checkout section" id="checkout">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">Pedido</span>
+        <h2 class="section__title">Completá tu Pedido</h2>
+        <p class="section__desc">Completá tus datos y te contactaremos por WhatsApp para confirmar.</p>
+      </div>
+      <div class="checkout__layout">
+        <form class="checkout__form" id="checkoutForm">
+          <div class="form__group">
+            <label class="form__label" for="fullName">Nombre Completo</label>
+            <input type="text" class="form__input" id="fullName" placeholder="ej. Juan Pérez" required autocomplete="name" />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="phone">Teléfono</label>
+            <input type="tel" class="form__input" id="phone" placeholder="ej. 3811234567" required autocomplete="tel" />
+          </div>
+          <div class="form__group">
+            <label class="form__label">Resumen del Pedido</label>
+            <div class="checkout__summary" id="checkoutSummary">
+              <p class="checkout__summary-empty">Aún no seleccionaste productos. Agregá productos desde la <a href="#products">sección de productos</a>.</p>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--primary btn--lg checkout__submit" id="orderBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg>
+            Pedir por WhatsApp
+          </button>
+        </form>
+        <div class="checkout__info">
+          <div class="checkout__card">
+            <h3>Cómo funciona</h3>
+            <ul class="checkout__steps">
+              <li>
+                <span class="checkout__step-num">1</span>
+                <span>Elegí tus productos arriba</span>
+              </li>
+              <li>
+                <span class="checkout__step-num">2</span>
+                <span>Completá tu nombre y teléfono</span>
+              </li>
+              <li>
+                <span class="checkout__step-num">3</span>
+                <span>Recibimos tu pedido por WhatsApp</span>
+              </li>
+              <li>
+                <span class="checkout__step-num">4</span>
+                <span>Te confirmamos y coordinamos la entrega</span>
+              </li>
+            </ul>
+          </div>
+          <div class="checkout__card">
+            <h3>Pago</h3>
+            <p>Pagás al recibir. Aceptamos efectivo, tarjeta y transferencias digitales.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="contact">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="logo logo--light">KawSay</a>
+        <p>Frutas y verduras congeladas premium. Congeladas en su punto óptimo de frescura, entregadas en tu puerta.</p>
+      </div>
+      <div class="footer__contact">
+        <h4 class="footer__heading">Contacto</h4>
+        <a href="https://wa.me/5493813879138?text=¡Hola%20KawSay%2C%20tengo%20una%20consulta!" target="_blank" rel="noopener" class="footer__link footer__whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="tel:+5493813879138" class="footer__link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +54 9 381 387 9138
+        </a>
+        <span class="footer__link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Buenos Aires, Argentina
+        </span>
+      </div>
+      <div class="footer__hours">
+        <h4 class="footer__heading">Horarios</h4>
+        <p>Lun – Vie: 9:00 – 19:00</p>
+        <p>Sábado: 10:00 – 16:00</p>
+        <p>Domingo: Cerrado</p>
+      </div>
+      <div class="footer__admin">
+        <button class="footer__link footer__admin-btn" id="adminFooterBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+          Admin
+        </button>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>&copy; 2026 KawSay. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== ADMIN MODAL ===== -->
+  <div class="admin-overlay" id="adminOverlay"></div>
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-modal__header">
+      <h2 class="admin-modal__title">Panel de Administración</h2>
+      <button class="admin-modal__close" id="adminClose" aria-label="Cerrar admin">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="admin-modal__body">
+      <!-- PIN -->
+      <div class="admin-view" id="adminPinView">
+        <div class="admin-pin">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3>Acceso Restringido</h3>
+          <p>Ingresá el PIN de administrador</p>
+          <input type="password" class="admin-pin__input" id="adminPinInput" maxlength="4" placeholder="****" inputmode="numeric" autocomplete="off" />
+          <button class="btn btn--primary" id="adminPinBtn">Ingresar</button>
+          <span class="admin-pin__error" id="adminPinError">PIN incorrecto</span>
+        </div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="admin-view" id="adminDashboardView" style="display:none">
+        <div class="admin-dashboard__top">
+          <h3>Gestionar Productos</h3>
+          <button class="btn btn--primary" id="adminAddBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Agregar Producto
+          </button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+        <p class="admin-empty" id="adminEmpty">No hay productos. ¡Agregá el primero!</p>
+      </div>
+
+      <!-- FORM -->
+      <div class="admin-view" id="adminFormView" style="display:none">
+        <form class="admin-form" id="adminForm">
+          <h3 id="adminFormTitle">Agregar Producto</h3>
+          <div class="admin-form__grid">
+            <div class="admin-form__left">
+              <div class="form__group">
+                <label class="form__label">Nombre</label>
+                <input type="text" class="form__input" id="adminFormName" placeholder="ej. Arándanos" required />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Descripción</label>
+                <textarea class="form__input admin-form__textarea" id="adminFormDesc" placeholder="Descripción del producto..." required></textarea>
+              </div>
+              <div class="form__group">
+                <label class="form__label">Precio ($)</label>
+                <input type="number" class="form__input" id="adminFormPrice" placeholder="ej. 7500" required min="1" />
+              </div>
+              <div class="form__group">
+                <label class="form__label">Categoría</label>
+                <div class="admin-category">
+                  <label class="admin-category__option">
+                    <input type="radio" name="category" value="fruta" checked />
+                    <span>Fruta</span>
+                  </label>
+                  <label class="admin-category__option">
+                    <input type="radio" name="category" value="verdura" />
+                    <span>Verdura</span>
+                  </label>
+                  <label class="admin-category__option">
+                    <input type="radio" name="category" value="panaderia" />
+                    <span>Panadería</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="admin-form__right">
+              <div class="form__group">
+                <label class="form__label">Color</label>
+                <div class="admin-colors" id="adminColors">
+                  <button class="admin-colors__swatch" data-color="#E8B4B4" style="background:#E8B4B4" aria-label="Rosa"></button>
+                  <button class="admin-colors__swatch" data-color="#F5D7A3" style="background:#F5D7A3" aria-label="Durazno"></button>
+                  <button class="admin-colors__swatch" data-color="#C5E0B4" style="background:#C5E0B4" aria-label="Verde claro"></button>
+                  <button class="admin-colors__swatch" data-color="#FAD7B5" style="background:#FAD7B5" aria-label="Naranja"></button>
+                  <button class="admin-colors__swatch" data-color="#B5D6A7" style="background:#B5D6A7" aria-label="Verde"></button>
+                  <button class="admin-colors__swatch" data-color="#D4A5B9" style="background:#D4A5B9" aria-label="Lila"></button>
+                  <button class="admin-colors__swatch admin-colors__swatch--custom" data-color="custom" aria-label="Personalizado">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                  </button>
+                  <input type="color" class="admin-colors__picker" id="adminColorPicker" value="#B7C77A" />
+                </div>
+              </div>
+              <div class="form__group">
+                <label class="form__label">Imagen</label>
+                <div class="admin-upload">
+                  <div class="admin-upload__preview" id="adminUploadPreview">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B7C77A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>Sin imagen</span>
+                  </div>
+                  <label class="admin-upload__btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Subir Foto
+                    <input type="file" id="adminFormImage" accept="image/*" />
+                  </label>
+                  <button type="button" class="admin-upload__remove" id="adminImageRemove" style="display:none">Eliminar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-form__actions">
+            <button type="button" class="btn" id="adminFormCancel">Cancelar</button>
+            <button type="submit" class="btn btn--primary" id="adminFormSubmit">Guardar Producto</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <script src="products-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
