@@ -60,7 +60,7 @@ function renderProducts() {
         <img
           class="product-card__image"
           src="${getProductImage(p)}"
-          alt="${p.name}"
+          alt="${p.name} — ${p.category === 'fruta' ? 'Fruta Congelada' : p.category === 'verdura' ? 'Verdura Congelada' : 'Panadería sin TACC'} KawSay"
           loading="lazy"
         />
         ${p.category === 'panaderia' ? '<img class="product-card__badge" src="sin-tacc.png" alt="Sin TACC" />' : ''}
@@ -669,13 +669,50 @@ document.addEventListener('click', e => {
   renderProducts();
 });
 
+/* ===== SEO JSON-LD ===== */
+function updateProductLd() {
+  const existing = document.getElementById('productLd');
+  if (existing) existing.remove();
+  if (products.length === 0) return;
+  const script = document.createElement('script');
+  script.id = 'productLd';
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Productos Congelados KawSay",
+    "description": "Frutas, verduras y panadería sin TACC congelados.",
+    "url": "https://kawsayweb.vercel.app/#products",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Product",
+        "name": p.name,
+        "description": p.desc,
+        "offers": {
+          "@type": "Offer",
+          "price": p.price / 100,
+          "priceCurrency": "ARS",
+          "availability": "https://schema.org/InStock"
+        },
+        "image": p.image || `https://kawsayweb.vercel.app/logo-hero.png`
+      }
+    }))
+  });
+  document.head.appendChild(script);
+}
+
 /* ===== INIT ===== */
 renderProducts();
 updateUI();
+updateProductLd();
 syncProducts().then(p => {
   products = p;
   cart = loadCart();
   saveCart();
   renderProducts();
   updateUI();
+  updateProductLd();
 });

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kawsayweb.vercel.app/sitemap.xml
