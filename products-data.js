@@ -41,37 +41,14 @@ function getProducts() {
 }
 
 async function syncProducts() {
-  // If localStorage already has data, don't overwrite from Supabase
-  const existing = readLocalProducts();
-  if (existing !== null) return existing;
-
-  // First visit — populate from Supabase
   try {
     const res = await fetch(`${SUPABASE_URL}/products?order=id.asc`, {
       headers: { apikey: SUPABASE_KEY, Accept: 'application/json' }
     });
     if (!res.ok) throw new Error('Supabase unavailable');
     const data = await res.json();
-    if (data.length > 0) {
-      writeLocalProducts(data);
-      return data;
-    }
-    // Supabase empty — migrate defaults
-    const defaults = getDefaultProducts();
-    for (const p of defaults) {
-      const { id, created_at, ...rest } = p;
-      await fetch(`${SUPABASE_URL}/products`, {
-        method: 'POST',
-        headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify(rest)
-      });
-    }
-    const res2 = await fetch(`${SUPABASE_URL}/products?order=id.asc`, {
-      headers: { apikey: SUPABASE_KEY, Accept: 'application/json' }
-    });
-    const data2 = await res2.json();
-    writeLocalProducts(data2);
-    return data2;
+    writeLocalProducts(data);
+    return data;
   } catch {
     return getProducts();
   }
@@ -79,38 +56,28 @@ async function syncProducts() {
 
 async function addProduct(product) {
   const { id, created_at, ...body } = product;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/products?select=*`, {
-      method: 'POST',
-      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (res.ok) {
-      const created = await res.json();
-      const row = Array.isArray(created) ? created[0] : created;
-      const products = getProducts();
-      products.push(row);
-      writeLocalProducts(products);
-      return products;
-    }
-  } catch {}
+  const res = await fetch(`${SUPABASE_URL}/products?select=*`, {
+    method: 'POST',
+    headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) return null;
+  const created = await res.json();
+  const row = Array.isArray(created) ? created[0] : created;
   const products = getProducts();
-  product.id = Date.now();
-  products.push(product);
+  products.push(row);
   writeLocalProducts(products);
   return products;
 }
 
 async function updateProduct(id, data) {
   const { id: _, created_at, ...body } = data;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/products?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) throw new Error('Supabase update failed');
-  } catch {}
+  const res = await fetch(`${SUPABASE_URL}/products?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) return null;
   const products = getProducts();
   const idx = products.findIndex(p => p.id === id);
   if (idx === -1) return null;
@@ -120,12 +87,11 @@ async function updateProduct(id, data) {
 }
 
 async function deleteProduct(id) {
-  try {
-    await fetch(`${SUPABASE_URL}/products?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: { apikey: SUPABASE_KEY }
-    });
-  } catch {}
+  const res = await fetch(`${SUPABASE_URL}/products?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: { apikey: SUPABASE_KEY }
+  });
+  if (!res.ok && res.status !== 404) return null;
   let products = getProducts();
   products = products.filter(p => p.id !== id);
   writeLocalProducts(products);

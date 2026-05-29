@@ -503,7 +503,8 @@ document.addEventListener('click', async e => {
     const id = parseInt(deleteBtn.dataset.id);
     const product = products.find(p => p.id === id);
     if (product && confirm(`¿Eliminar "${product.name}"?`)) {
-      await deleteProduct(id);
+      const result = await deleteProduct(id);
+      if (!result) { showToast('Error al eliminar. Revisá tu conexión.'); return; }
       reloadProductsAndUI();
       renderAdminTable();
       showToast(`${product.name} eliminado`);
@@ -587,11 +588,14 @@ adminForm.addEventListener('submit', async e => {
     category: getAdminCategory()
   };
 
+  let result;
   if (adminEditingId) {
-    await updateProduct(adminEditingId, data);
+    result = await updateProduct(adminEditingId, data);
+    if (!result) { showToast('Error al actualizar. Revisá tu conexión.'); return; }
     showToast('Producto actualizado');
   } else {
-    await addProduct(data);
+    result = await addProduct(data);
+    if (!result) { showToast('Error al agregar. Revisá tu conexión.'); return; }
     showToast('Producto agregado');
   }
 
