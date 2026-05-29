@@ -1559,12 +1559,12 @@ ul { list-style: none; }
   }
 
   .hero__circle {
-    width: 320px;
-    height: 320px;
+    width: 350px;
+    height: 350px;
   }
 
   .hero__logo {
-    padding: 2px;
+    padding: 0;
   }
 
   .hero__icon {
@@ -1602,12 +1602,12 @@ ul { list-style: none; }
   }
 
   .hero__circle {
-    width: 280px;
-    height: 280px;
+    width: 320px;
+    height: 320px;
   }
 
   .hero__logo {
-    padding: 1px;
+    padding: 0;
   }
 
   .hero__icon {
@@ -1672,8 +1672,8 @@ ul { list-style: none; }
   }
 
   .hero__circle {
-    width: 240px;
-    height: 240px;
+    width: 280px;
+    height: 280px;
   }
 
   .hero__logo {
