@@ -1,4 +1,4 @@
-const ADMIN_PIN = '1234';
+const ADMIN_PIN = '2210';
 
 const SUPABASE_URL = 'https://qdtszwhakgtioazjouho.supabase.co/rest/v1';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkdHN6d2hha2d0aW9hempvdWhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNjU5MDYsImV4cCI6MjA5NTY0MTkwNn0.l6EMZXxpFhyiEZjY9SXGAYOr4r5j0cvNan_f30bVwFs';
