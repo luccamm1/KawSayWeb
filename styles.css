@@ -1652,8 +1652,8 @@ ul { list-style: none; }
   }
 
   .products__grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .hero__badge {
