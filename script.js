@@ -254,12 +254,12 @@ function closeCart() {
 }
 
 /* ===== WHATSAPP ===== */
-function generateWhatsAppMessage(name, phone) {
+function generateWhatsAppMessage(name, address) {
   const lines = [];
   lines.push('¡Hola! Quiero hacer un pedido.');
   lines.push('');
   lines.push(`Nombre: ${name}`);
-  lines.push(`Teléfono: ${phone}`);
+  lines.push(`Dirección: ${address}`);
   lines.push('');
   lines.push('Pedido:');
   lines.push('');
@@ -276,8 +276,8 @@ function generateWhatsAppMessage(name, phone) {
   return lines.join('\n');
 }
 
-function orderViaWhatsApp(name, phone) {
-  const message = generateWhatsAppMessage(name, phone);
+function orderViaWhatsApp(name, address) {
+  const message = generateWhatsAppMessage(name, address);
   const encoded = encodeURIComponent(message);
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
   showToast('Abriendo WhatsApp...');
@@ -664,14 +664,14 @@ checkoutBtn.addEventListener('click', () => {
 checkoutForm.addEventListener('submit', e => {
   e.preventDefault();
   const name = document.getElementById('fullName').value.trim();
-  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
 
   if (!name) {
     showToast('Por favor ingresá tu nombre');
     return;
   }
-  if (!phone) {
-    showToast('Por favor ingresá tu teléfono');
+  if (!address) {
+    showToast('Por favor ingresá tu dirección');
     return;
   }
   if (cart.length === 0) {
@@ -679,7 +679,7 @@ checkoutForm.addEventListener('submit', e => {
     return;
   }
 
-  orderViaWhatsApp(name, phone);
+  orderViaWhatsApp(name, address);
 });
 
 window.addEventListener('scroll', handleScroll, { passive: true });
