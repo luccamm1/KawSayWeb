@@ -1564,7 +1564,7 @@ ul { list-style: none; }
   }
 
   .hero__logo {
-    padding: 8px;
+    padding: 2px;
   }
 
   .hero__icon {
@@ -1607,7 +1607,7 @@ ul { list-style: none; }
   }
 
   .hero__logo {
-    padding: 6px;
+    padding: 1px;
   }
 
   .hero__icon {
@@ -1677,7 +1677,7 @@ ul { list-style: none; }
   }
 
   .hero__logo {
-    padding: 4px;
+    padding: 0;
   }
 
   .footer__inner {
