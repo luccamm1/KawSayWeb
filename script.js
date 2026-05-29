@@ -458,8 +458,36 @@ function reloadProductsAndUI() {
   updateUI();
 }
 
-/* ===== ADMIN EVENT DELEGATION ===== */
+/* ===== EVENT DELEGATION ===== */
 document.addEventListener('click', async e => {
+  const addBtn = e.target.closest('.product-card__add-btn');
+  if (addBtn) {
+    const id = parseInt(addBtn.dataset.id);
+    addToCart(id);
+    return;
+  }
+
+  const qtyBtn = e.target.closest('.qty-selector__btn');
+  if (qtyBtn) {
+    const id = parseInt(qtyBtn.dataset.id);
+    updateQty(id, qtyBtn.dataset.action === 'inc' ? 1 : -1);
+    return;
+  }
+
+  const cartQtyBtn = e.target.closest('.cart-item__qty-btn');
+  if (cartQtyBtn) {
+    const id = parseInt(cartQtyBtn.dataset.id);
+    updateQty(id, cartQtyBtn.dataset.action === 'inc' ? 1 : -1);
+    return;
+  }
+
+  const removeBtn = e.target.closest('.cart-item__remove');
+  if (removeBtn) {
+    const id = parseInt(removeBtn.dataset.id);
+    removeFromCart(id);
+    return;
+  }
+
   const editBtn = e.target.closest('.admin-table__btn--edit');
   if (editBtn) {
     const id = parseInt(editBtn.dataset.id);
