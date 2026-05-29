@@ -459,7 +459,7 @@ function reloadProductsAndUI() {
 }
 
 /* ===== ADMIN EVENT DELEGATION ===== */
-document.addEventListener('click', e => {
+document.addEventListener('click', async e => {
   const editBtn = e.target.closest('.admin-table__btn--edit');
   if (editBtn) {
     const id = parseInt(editBtn.dataset.id);
@@ -472,7 +472,7 @@ document.addEventListener('click', e => {
     const id = parseInt(deleteBtn.dataset.id);
     const product = products.find(p => p.id === id);
     if (product && confirm(`¿Eliminar "${product.name}"?`)) {
-      deleteProduct(id);
+      await deleteProduct(id);
       reloadProductsAndUI();
       renderAdminTable();
       showToast(`${product.name} eliminado`);
@@ -514,7 +514,7 @@ adminImageRemove.addEventListener('click', () => {
   updateAdminUploadPreview();
 });
 
-adminForm.addEventListener('submit', e => {
+adminForm.addEventListener('submit', async e => {
   e.preventDefault();
   const name = adminFormName.value.trim();
   const desc = adminFormDesc.value.trim();
@@ -535,10 +535,10 @@ adminForm.addEventListener('submit', e => {
   };
 
   if (adminEditingId) {
-    updateProduct(adminEditingId, data);
+    await updateProduct(adminEditingId, data);
     showToast('Producto actualizado');
   } else {
-    addProduct(data);
+    await addProduct(data);
     showToast('Producto agregado');
   }
 
@@ -641,3 +641,8 @@ document.addEventListener('click', e => {
 /* ===== INIT ===== */
 renderProducts();
 updateUI();
+syncProducts().then(p => {
+  products = p;
+  renderProducts();
+  updateUI();
+});

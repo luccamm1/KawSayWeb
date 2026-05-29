@@ -1,5 +1,8 @@
 const ADMIN_PIN = '1234';
 
+const SUPABASE_URL = 'https://qdtszwhakgtioazjouho.supabase.co/rest/v1';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkdHN6d2hha2d0aW9hempvdWhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNjU5MDYsImV4cCI6MjA5NTY0MTkwNn0.l6EMZXxpFhyiEZjY9SXGAYOr4r5j0cvNan_f30bVwFs';
+
 function getDefaultProducts() {
   return [
     { id: 1,  name: 'Frutilla',      desc: 'Frutillas enteras congeladas, dulces y jugosas. Perfectas para smoothies, postres y toppings.',              price: 8500,  image: '', color: '#E8B4B4', category: 'fruta' },
@@ -14,7 +17,7 @@ function getDefaultProducts() {
   ];
 }
 
-function getProducts() {
+function readLocalProducts() {
   try {
     const saved = localStorage.getItem('kawsay_products');
     if (saved) {
@@ -22,35 +25,103 @@ function getProducts() {
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
   } catch {}
-  const defaults = getDefaultProducts();
-  saveProducts(defaults);
-  return defaults;
+  return null;
 }
 
-function saveProducts(products) {
+function writeLocalProducts(products) {
   localStorage.setItem('kawsay_products', JSON.stringify(products));
 }
 
-function addProduct(product) {
+function getProducts() {
+  const local = readLocalProducts();
+  if (local) return local;
+  const defaults = getDefaultProducts();
+  writeLocalProducts(defaults);
+  return defaults;
+}
+
+async function syncProducts() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/products?order=id.asc`, {
+      headers: { apikey: SUPABASE_KEY, Accept: 'application/json' }
+    });
+    if (!res.ok) throw new Error('Supabase unavailable');
+    const data = await res.json();
+    if (data.length > 0) {
+      writeLocalProducts(data);
+      return data;
+    }
+    const local = readLocalProducts() || getDefaultProducts();
+    for (const p of local) {
+      const { id, created_at, ...rest } = p;
+      await fetch(`${SUPABASE_URL}/products`, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(rest)
+      });
+    }
+    const res2 = await fetch(`${SUPABASE_URL}/products?order=id.asc`, {
+      headers: { apikey: SUPABASE_KEY, Accept: 'application/json' }
+    });
+    const data2 = await res2.json();
+    writeLocalProducts(data2);
+    return data2;
+  } catch {
+    return getProducts();
+  }
+}
+
+async function addProduct(product) {
+  const { id, created_at, ...body } = product;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/products?select=*`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (res.ok) {
+      const created = await res.json();
+      const row = Array.isArray(created) ? created[0] : created;
+      const products = getProducts();
+      products.push(row);
+      writeLocalProducts(products);
+      return products;
+    }
+  } catch {}
   const products = getProducts();
   product.id = Date.now();
   products.push(product);
-  saveProducts(products);
+  writeLocalProducts(products);
   return products;
 }
 
-function updateProduct(id, data) {
+async function updateProduct(id, data) {
+  const { id: _, created_at, ...body } = data;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/products?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error('Supabase update failed');
+  } catch {}
   const products = getProducts();
   const idx = products.findIndex(p => p.id === id);
   if (idx === -1) return null;
-  products[idx] = { ...products[idx], ...data };
-  saveProducts(products);
+  products[idx] = { ...products[idx], ...body };
+  writeLocalProducts(products);
   return products;
 }
 
-function deleteProduct(id) {
+async function deleteProduct(id) {
+  try {
+    await fetch(`${SUPABASE_URL}/products?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { apikey: SUPABASE_KEY }
+    });
+  } catch {}
   let products = getProducts();
   products = products.filter(p => p.id !== id);
-  saveProducts(products);
+  writeLocalProducts(products);
   return products;
 }
