@@ -60,7 +60,7 @@ function renderProducts() {
         <img
           class="product-card__image"
           src="${getProductImage(p)}"
-          alt="${p.name} — ${p.category === 'fruta' ? 'Fruta Congelada' : p.category === 'verdura' ? 'Verdura Congelada' : 'Panadería sin TACC'} KawSay"
+          alt="${p.name} — ${p.category === 'fruta' ? 'Fruta Congelada' : p.category === 'verdura' ? 'Verdura Congelada' : p.category === 'smoothies' ? 'Smoothie' : 'Panadería sin TACC'} KawSay"
           loading="lazy"
         />
         ${p.category === 'panaderia' ? '<img class="product-card__badge" src="sin-tacc.png" alt="Sin TACC" />' : ''}
